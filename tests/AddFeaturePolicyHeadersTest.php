@@ -3,8 +3,8 @@
 use CodebarAg\LaravelFeaturePolicy\AddFeaturePolicyHeaders;
 use CodebarAg\LaravelFeaturePolicy\Directive;
 use CodebarAg\LaravelFeaturePolicy\Policies\Policy;
-use CodebarAg\LaravelFeaturePolicy\Value;
 use CodebarAg\LaravelFeaturePolicy\Tests\Fixtures\SamplePermissionsPolicy;
+use CodebarAg\LaravelFeaturePolicy\Value;
 use Illuminate\Support\Facades\Route;
 
 beforeEach(function () {

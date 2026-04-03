@@ -2,31 +2,36 @@
     "name": "codebar-ag/laravel-feature-policy",
     "description": "Permissions-Policy (Feature-Policy) header builder and middleware for Laravel",
     "keywords": [
+        "codebar-ag",
         "laravel",
         "permissions-policy",
         "feature-policy",
         "security",
         "headers"
     ],
+    "homepage": "https://github.com/codebar-ag/laravel-feature-policy",
     "license": "MIT",
-    "type": "library",
     "authors": [
         {
-            "name": "Codebar Solutions AG",
-            "homepage": "https://www.codebar.ch"
+            "name": "Sebastian Bürgin-Fix",
+            "email": "helpdesk@codebar.ch",
+            "homepage": "https://www.codebar.ch",
+            "role": "Software-Engineer"
         }
     ],
     "require": {
-        "php": "^8.5",
+        "php": "8.3.*|8.4.*|8.5.*",
         "illuminate/contracts": "^13.0",
         "illuminate/http": "^13.0",
         "illuminate/support": "^13.0"
     },
     "require-dev": {
-        "laravel/framework": "^13.3",
+        "larastan/larastan": "^3.9",
+        "laravel/pint": "^1.21",
         "orchestra/testbench": "^11.0",
         "pestphp/pest": "^4.0",
-        "phpunit/phpunit": "^12.0"
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "phpstan/phpstan": "^2.1"
     },
     "autoload": {
         "psr-4": {
@@ -51,11 +56,21 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
-    "scripts": {
-        "test": "pest",
-        "test-coverage": "pest --coverage"
+    "suggest": {
+        "ext-pcov": "For composer test-coverage (or use Xdebug with coverage mode)"
     },
-    "version": "1.0.0"
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage --min=100",
+        "format": "vendor/bin/pint",
+        "lint": "vendor/bin/pint --test",
+        "analyse": "vendor/bin/phpstan",
+        "quality": [
+            "@lint",
+            "@analyse",
+            "@test"
+        ]
+    }
 }

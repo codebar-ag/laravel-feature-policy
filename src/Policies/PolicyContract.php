@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface PolicyContract extends Stringable
 {
     /**
-     * @param  array<int|string, mixed>|string  $values
+     * @param  array<string>|string  $values
      */
     public function addDirective(string $directive, array|string $values, ?string $type = null): self;
 

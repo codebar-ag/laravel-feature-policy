@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CodebarAg\LaravelFeaturePolicy;
 
-use CodebarAg\LaravelFeaturePolicy\Policies\Policy;
 use Closure;
+use CodebarAg\LaravelFeaturePolicy\Policies\Policy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +36,7 @@ final class AddFeaturePolicyHeaders
 
         $policyClass = config('feature-policy.policy');
 
-        if (! empty($policyClass)) {
+        if (is_string($policyClass) && $policyClass !== '') {
             $policies->push(PolicyFactory::create($policyClass));
         }
 

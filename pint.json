@@ -1,0 +1,11 @@
+{
+    "preset": "laravel",
+    "exclude": [
+        ".phpunit.cache",
+        ".phpunit.result.cache",
+        ".idea",
+        ".vscode",
+        "vendor",
+        "var"
+    ]
+}

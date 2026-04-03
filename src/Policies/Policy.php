@@ -22,6 +22,9 @@ abstract class Policy implements PolicyContract
 
     abstract public function configure(): void;
 
+    /**
+     * @param  array<string>|string  $values
+     */
     public function addDirective(string $directive, array|string $values, ?string $type = null): self
     {
         $groupClass = $type ?? DefaultFeatureGroup::class;
@@ -31,7 +34,7 @@ abstract class Policy implements PolicyContract
 
         $valueItems = is_array($values) ? $values : [$values];
         collect($valueItems)
-            ->map(fn (mixed $valueItem) => array_filter(explode(' ', (string) $valueItem)))
+            ->map(fn (string $valueItem) => array_filter(explode(' ', $valueItem)))
             ->flatten()
             ->map(fn (string $rule) => $this->isSpecialDirectiveValue($rule) ? $rule : "\"{$rule}\"")
             ->each(fn (string $rule) => $currentDirective->addRule($rule))
@@ -44,7 +47,7 @@ abstract class Policy implements PolicyContract
 
     public function shouldBeApplied(Request $request, Response $response): bool
     {
-        return config('feature-policy.enabled');
+        return (bool) config('feature-policy.enabled');
     }
 
     public function applyTo(Response $response): void
@@ -61,13 +64,16 @@ abstract class Policy implements PolicyContract
 
         $response->headers->set($headerName, (string) $this);
 
-        if (! config('feature-policy.reporting.enabled')) {
+        if (! (bool) config('feature-policy.reporting.enabled')) {
             return;
         }
 
-        $response->headers->set('Reporting-Endpoints', 'violation-reports="'.config('feature-policy.reporting.url').'"');
+        $reportingUrl = config('feature-policy.reporting.url');
+        $url = is_string($reportingUrl) ? $reportingUrl : '';
 
-        if (! config('feature-policy.reporting.report_only')) {
+        $response->headers->set('Reporting-Endpoints', 'violation-reports="'.$url.'"');
+
+        if (! (bool) config('feature-policy.reporting.report_only')) {
             return;
         }
 
