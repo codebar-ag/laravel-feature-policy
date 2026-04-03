@@ -94,6 +94,10 @@ Run lint, analysis, and tests together:
 composer quality
 ```
 
+## Credits
+
+This package was initially inspired by [mazedlx/laravel-feature-policy](https://github.com/mazedlx/laravel-feature-policy) (MIT). The implementation has since been significantly adapted for Laravel 13 and is maintained independently by [codebar-ag](https://github.com/codebar-ag).
+
 ## License
 
 MIT
