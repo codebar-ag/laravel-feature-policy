@@ -34,8 +34,7 @@ abstract class Policy implements PolicyContract
 
         $valueItems = is_array($values) ? $values : [$values];
         collect($valueItems)
-            ->map(fn (string $valueItem) => array_filter(explode(' ', $valueItem)))
-            ->flatten()
+            ->flatMap(fn (string $valueItem) => array_filter(explode(' ', $valueItem)))
             ->map(fn (string $rule) => $this->isSpecialDirectiveValue($rule) ? $rule : "\"{$rule}\"")
             ->each(fn (string $rule) => $currentDirective->addRule($rule))
             ->each(fn (string $rule) => $this->rules[$directive][] = $rule);

@@ -102,6 +102,22 @@ it('parses space separated string values', function () {
 })
     ->group('unit', 'feature-policy');
 
+it('parses arrays of space separated values with repeated whitespace', function () {
+    $policy = new class extends Policy
+    {
+        public function configure(): void
+        {
+            $this->addDirective(Directive::CAMERA, ['src-1  src-2', ' '.Value::SELF.' ']);
+        }
+    };
+
+    config(['feature-policy.policy' => $policy::class]);
+
+    $this->get('/__fp_headers_route')
+        ->assertHeader('Permissions-Policy', 'camera=("src-1" "src-2" self)');
+})
+    ->group('unit', 'feature-policy');
+
 it('does not add duplicate rule values', function () {
     $policy = new class extends Policy
     {
